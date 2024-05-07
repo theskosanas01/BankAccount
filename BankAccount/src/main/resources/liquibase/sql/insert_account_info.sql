@@ -1,0 +1,1 @@
+INSERT INTO `bank`.`accounts` (`accountid`, `balance`, `active`) VALUES ('1000025362', '1000', '1');

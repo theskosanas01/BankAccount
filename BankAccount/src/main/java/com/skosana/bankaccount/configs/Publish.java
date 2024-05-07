@@ -16,13 +16,13 @@ public class Publish {
         this.snsClient = SnsClient.builder()
                 .region(Region.AF_SOUTH_1)
                 .build();
-
     }
 
     public void publish(String topic, String message) {
         log.info("Publishing message: {}", message);
         try{
-            String snsTopicArn = "arn:aws:sns:YOUR_REGION:YOUR_ACCOUNT_ID:"+topic;
+            String snsTopicArn = "arn:aws:sns:"+this.snsClient.serviceClientConfiguration().region()+":YOUR_ACCOUNT_ID:"+topic;
+            log.info("snsTopicArn: {}", snsTopicArn);
             PublishRequest publishRequest = PublishRequest.builder()
                     .message(message)
                     .topicArn(snsTopicArn)
@@ -30,7 +30,7 @@ public class Publish {
 
             PublishResponse publishResponse = snsClient.publish(publishRequest);
 
-            log.info("Response Status "+publishResponse.sdkHttpResponse().statusCode());
+            log.info("Response Status {}", publishResponse.sdkHttpResponse().statusCode());
         }catch (Exception e) {
             log.error(e.getMessage());
         }

@@ -32,7 +32,7 @@ public class BankAccountImpl implements BankAccount {
         } else {
             event.setAccountId(accountid);
             event.setAmount(amountToWithdraw);
-            event.setStatus("failed");
+            event.setStatus("FAILURE");
         }
         return event;
     }
@@ -62,14 +62,14 @@ public class BankAccountImpl implements BankAccount {
                 Account account = accounts.getFirst();
                 account.setBalance(account.getBalance().subtract(amountToWithdraw));
                 accountRepository.save(account);
-                return "success";
+                return "SUCCESSFUL";
             } else {
                 log.info("account with id {} not found, cannot update balance", maskString(accountid));
-                return "failed";
+                return "FAILURE";
             }
         } catch (Exception e) {
             log.error("Error updating balance for account {}", maskString(accountid), e);
-            return "failed";
+            return "FAILURE";
         }
     }
 }
